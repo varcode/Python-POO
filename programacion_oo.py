@@ -31,15 +31,17 @@ class Auto(Vehiculo):
     __km_recorridos_trayecto = 0
     __caballos_fuerza_motor = 1.0
     __cantidad_combustible = 0
+    __marca_auto = ''
+
+    def __init__(self, capacidad_combustible, marca):
+       self.__capacidad_combustible_litros = capacidad_combustible
+       self.__marca_auto = marca
+
+
 
     def __init__(self, capacidad_combustible):
         self.__capacidad_combustible_litros = capacidad_combustible
         self.__mensaje = 'Constructor capacidad combustible'
-    
-    def __init__(self, capacidad_combustible, motor):
-        self.__capacidad_combustible_litros = capacidad_combustible
-        self.__caballos_fuerza_motor = motor
-
 
     def Arrancar(self):
         self.__km_recorridos_trayecto = 0
@@ -53,9 +55,50 @@ class Auto(Vehiculo):
     def MostrarCantidadCombustible(self):
         print(self.__cantidad_combustible)
 
-#Volkswagen Up!
+    def CargarNafta(self, Cantidad_Nafta_A_Cargar):
+        self.__cantidad_combustible = self.__cantidad_combustible + Cantidad_Nafta_A_Cargar
+
+    #Este metodo sirve para verificar si se puede o no cargar nafta mas alla de la capacidad
+    #del tanque de combustible.
+    #O sea... no podes cargar mas nafta de lo que puede almacenar el auto no?
+    #Lo que hago es sumar la cantidad de combustible que quiero cargar, pero que todavia
+    #no cargue al auto, mas lo que tiene en el tanque actualmente cargado y pregunto
+    #si no supera la capacidad del tanque del auto.
+    def SePuedeCargarNafta(self, Cantidad_Nafta_A_Cargar):
+        #El if, se utiliza para compara valores de variables o de variables y valores fijos ( 3,4,10000)
+        #Si es verdadero, se ejecuta lo que esta dentro del IF
+        #De lo contrario se ejecuta lo que esta en el ELSE
+        #No es obligatorio poner ELSE
+        if ( Cantidad_Nafta_A_Cargar + self.__cantidad_combustible > self.__capacidad_combustible_litros):
+            return False
+        else:
+            return True
+
+#Array de objeto (creo que se puede hacer) vacio
+arrayDeAuto = []
+print(" 1 - Ingresar auto")
+print(" 2 - Salir")
+opcionSeleccionada = int(input("Ingrese opcion:"))
+
+
+#El WHILE va a ejecutar el codigo, hasta que la condicion que se encuentra entre paretesis
+#sea falsa
+while (opcionSeleccionada < 2 ):
+    marca_auto_nuevo = input("Ingrese marca de auto:")
+    capacidad_combustible_auto_nuevo = int(input("Ingrese la capacidad de combustible del auto:"))
+    autoNuevo = Auto(capacidad_combustible_auto_nuevo, marca_auto_nuevo)
+    arrayDeAuto.append(autoNuevo)
+    print(" 1 - Ingresar auto")
+    print(" 2 - Salir")
+    opcionSeleccionada = int(input("Ingrese opcion:"))
+
+
+'''
+Este codigo es viejo!!
+
+
 miAuto = Auto(50)
-#Volkswagen Suran
+
 autoVictor = Auto(30)
 
 miAuto.Arrancar()
@@ -64,4 +107,9 @@ autoVictor.Arrancar()
 miAuto.Moverse(50)
 autoVictor.Moverse(50)
 
+if(miAuto.SePuedeCargarNafta(20)):
+    miAuto.CargarNafta(20)
+
+
 miAuto.MostrarCantidadCombustible()
+'''
